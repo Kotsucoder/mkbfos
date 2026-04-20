@@ -8,6 +8,7 @@ class BrainFProgram:
         self.__loop_set = self.__get_loop_set()
         self.__memory = [0 for i in range(0, 100000)]
         self.__memory_pointer = 0
+        self.__memory_length = 10000
 
     def __load_program(self, path: str) -> list[str]:
         """
@@ -15,7 +16,7 @@ class BrainFProgram:
         """
         with open(path, "r") as file:
             full_code = file.read()
-        valid_chars = ['+', '-', '.', ',', '[', ']']
+        valid_chars = ['>', '<', '+', '-', '.', ',', '[', ']']
         short_code = []
         for char in full_code:
             if char in valid_chars:
@@ -37,6 +38,22 @@ class BrainFProgram:
                 loop_set[loop_start] = loop_end
                 loop_set[loop_end] = loop_start
         return loop_set
+    
+    def __move_right(self):
+        """
+        Moves the memory pointer one cell to the right.
+        """
+        self.__memory_pointer += 1
+        if self.__memory_pointer >= self.__memory_length:
+            self.__memory_pointer = 0
+
+    def __move_left(self):
+        """
+        Moves the memory pointer one cell to the left.
+        """
+        self.__memory_pointer -= 1
+        if self.__memory_pointer < 0:
+            self.__memory_pointer = self.__memory_length - 1
     
     def __increment(self):
         """
