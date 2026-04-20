@@ -78,6 +78,20 @@ class BrainFProgram:
         char = chr(self.__memory[self.__memory_pointer])
         print(char, end="")
 
+    def __input(self):
+        """
+        Takes in a char input and saves it's ASCII number to the current memory cell.
+        """
+        valid = False
+        print()
+        while not valid:
+            try:
+                value = ord(input("> ")[0])
+                if value >= 0 and value <= 255:
+                    valid = True
+            except IndexError:
+                continue
+
 
 if __name__ == "__main__":
     helloworld = BrainFProgram("helloworld.bf")
