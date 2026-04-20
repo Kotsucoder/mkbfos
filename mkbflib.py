@@ -91,6 +91,20 @@ class BrainFProgram:
                     valid = True
             except IndexError:
                 continue
+    
+    def __loop_start(self):
+        """
+        If the value in the current memory cell is 0, jump to the paired instruction pointer index.
+        """
+        if self.__memory[self.__memory_pointer] == 0:
+            self.__instruction_pointer = self.__loop_set[self.__memory[self.__memory_pointer]]
+    
+    def __loop_end(self):
+        """
+        If the value in the current memory cell is not 0, jump to the paired instruction pointer index.
+        """
+        if self.__memory[self.__memory_pointer] != 0:
+            self.__instruction_pointer = self.__loop_set[self.__memory[self.__memory_pointer]]
 
 
 if __name__ == "__main__":
