@@ -53,6 +53,13 @@ class BrainFProgram:
         self.__memory[self.__memory_pointer] -= 1
         if self.__memory[self.__memory_pointer] < 0:
             self.__memory[self.__memory_pointer] = 255
+    
+    def __output(self):
+        """
+        Outputs the character at the current memory cell.
+        """
+        char = chr(self.__memory[self.__memory_pointer])
+        print(char, end="")
 
 
 if __name__ == "__main__":
