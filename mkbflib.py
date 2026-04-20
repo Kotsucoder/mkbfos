@@ -9,6 +9,7 @@ class BrainFProgram:
         self.__memory = [0 for i in range(0, 100000)]
         self.__memory_pointer = 0
         self.__memory_length = 10000
+        self.__program_active = True
 
     def __load_program(self, path: str) -> list[str]:
         """
@@ -21,6 +22,7 @@ class BrainFProgram:
         for char in full_code:
             if char in valid_chars:
                 short_code.append(char)
+        short_code.append("!")
         return short_code
     
     def __get_loop_set(self) -> dict[int, int]:
@@ -97,15 +99,46 @@ class BrainFProgram:
         If the value in the current memory cell is 0, jump to the paired instruction pointer index.
         """
         if self.__memory[self.__memory_pointer] == 0:
-            self.__instruction_pointer = self.__loop_set[self.__memory[self.__memory_pointer]]
+            self.__instruction_pointer = self.__loop_set[self.__instruction_pointer]
     
     def __loop_end(self):
         """
         If the value in the current memory cell is not 0, jump to the paired instruction pointer index.
         """
         if self.__memory[self.__memory_pointer] != 0:
-            self.__instruction_pointer = self.__loop_set[self.__memory[self.__memory_pointer]]
+            self.__instruction_pointer = self.__loop_set[self.__instruction_pointer]
+
+    def __end_program(self):
+        self.__program_active = False
+    
+    def run(self):
+        """
+        Runs the BF program.
+        """
+        while self.__program_active:
+            command = self.__instructions[self.__instruction_pointer]
+            match command:
+                case ">":
+                    self.__move_right()
+                case "<":
+                    self.__move_left()
+                case "+":
+                    self.__increment()
+                case "-":
+                    self.__decrement()
+                case ".":
+                    self.__output()
+                case ",":
+                    self.__input()
+                case "[":
+                    self.__loop_start()
+                case "]":
+                    self.__loop_end()
+                case "!":
+                    self.__end_program()
+            self.__instruction_pointer += 1
 
 
 if __name__ == "__main__":
     helloworld = BrainFProgram("helloworld.bf")
+    helloworld.run()
