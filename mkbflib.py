@@ -45,6 +45,14 @@ class BrainFProgram:
         self.__memory[self.__memory_pointer] += 1
         if self.__memory[self.__memory_pointer] > 255:
             self.__memory[self.__memory_pointer] = 0
+    
+    def __decrement(self):
+        """
+        Decrements the value at the current memory cell.
+        """
+        self.__memory[self.__memory_pointer] -= 1
+        if self.__memory[self.__memory_pointer] < 0:
+            self.__memory[self.__memory_pointer] = 255
 
 
 if __name__ == "__main__":
