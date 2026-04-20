@@ -37,6 +37,14 @@ class BrainFProgram:
                 loop_set[loop_start] = loop_end
                 loop_set[loop_end] = loop_start
         return loop_set
+    
+    def __increment(self):
+        """
+        Increments the value at the current memory cell.
+        """
+        self.__memory[self.__memory_pointer] += 1
+        if self.__memory[self.__memory_pointer] > 255:
+            self.__memory[self.__memory_pointer] = 0
 
 
 if __name__ == "__main__":
